@@ -1,155 +1,66 @@
-<p align="center">
-  <a href="https://www.medusa-commerce.com">
-    <img alt="Medusa" src="https://i.imgur.com/USubGVY.png" width="100" />
-  </a>
-</p>
-<h1 align="center">
-  Medusa Starter Default
-</h1>
-<p align="center">
-This repo provides the skeleton to get you started with using <a href="https://github.com/medusajs/medusa">Medusa</a>. Follow the steps below to get ready.
-</p>
-<p align="center">
-  <a href="https://github.com/medusajs/medusa/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Medusa is released under the MIT license." />
-  </a>
-  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
-  </a>
-  <a href="https://discord.gg/xpCwq3Kfn8">
-    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
-  </a>
-  <p align="center">
-    <a href="https://heroku.com/deploy?template=https://github.com/medusajs/medusa-starter-default/tree/feat/deploy-heroku">
-      <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-    </a>
-  </p>
-</p>
+# Medusa B2B Tutorial
+
+This repository is the codebase of tutorial "How to Create B2B Store with Medusa" - specifically the Medusa server.
+
+[Medusa Documentation](https://docs.medusajs.com/) | [Medusa Website](https://medusajs.com/) | [Medusa Repository](https://github.com/medusajs/medusa)
+
+## Medusa Version
+
+This tutorial uses Medusa v1.6.5. It is not guaranteed that it will work with future releases.
 
 ## Prerequisites
 
-This starter has minimal prerequisites and most of these will usually already be installed on your computer.
+- [Node.js at least v14](https://docs.medusajs.com/tutorial/set-up-your-development-environment#nodejs)
+- [PostgreSQL](https://docs.medusajs.com/tutorial/set-up-your-development-environment#postgresql)
+- [Medusa CLI Tool](https://docs.medusajs.com/cli/reference)
+- [MinIO](https://docs.medusajs.com/add-plugins/minio/#set-up-minio)
 
-- [Install Node.js](https://nodejs.org/en/download/)
-- [Install git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Install SQLite](https://www.sqlite.org/download.html)
+## How to Install
 
-## Setting up your store
+### Using Medusa CLI tool
 
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa
-  yarn global add @medusajs/medusa
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Run your project
-  ```
-  cd my-medusa-store
-  medusa develop
-  ```
+1. Run the following command to install the Medusa server using Medusa's CLI tool:
 
-Your local Medusa server is now running on port **9000**.
-
-### Seeding your Medusa store
-
----
-
-To seed your medusa store run the following command:
-
-```
-medusa seed -f ./data/seed.json
+```bash
+medusa new b2b-server https://github.com/shahednasser/b2b-server
 ```
 
-This command seeds your database with some sample data to get you started, including a store, an administrator account, a region and a product with variants. What the data looks like precisely you can see in the `./data/seed.json` file.
+2\. Start Medusa Server:
 
-## Setting up your store with Docker
-
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa-cli
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Update project config in `medusa-config.js`:
-
-  ```
-  module.exports = {
-    projectConfig: {
-      redis_url: REDIS_URL,
-      database_url: DATABASE_URL, //postgres connectionstring
-      database_type: "postgres",
-      store_cors: STORE_CORS,
-      admin_cors: ADMIN_CORS,
-    },
-    plugins,
-  };
-  ```
-
-- Run your project
-
-  When running your project the first time `docker compose` should be run with the `build` flag to build your container locally:
-
-  ```
-  docker-compose up --build
-  ```
-
-  When running your project subsequent times you can run docker compose with no flags to spin up your local environment in seconds:
-
-  ```
-  docker-compose up
-  ```
-
-Your local Medusa server is now running on port **9000**.
-
-### Seeding your Medusa store with Docker
-
----
-
-To add seed data to your medusa store running with Docker, run this command in a seperate terminal:
-
-```
-docker exec medusa-server medusa seed -f ./data/seed.json
+```bash
+cd b2b-server
+npm start
 ```
 
-This will execute the previously described seed script in the running `medusa-server` Docker container.
+### Using GitHub Repository
 
-## Try it out
+1. Clone this repository:
 
+```bash
+git clone https://github.com/shahednasser/b2b-server.git
+cd b2b-server
 ```
-curl -X GET localhost:9000/store/products | python -m json.tool
+
+2\. Install the dependencies:
+
+```bash
+npm install
 ```
 
-After the seed script has run you will have the following things in you database:
+3\. Rename the template environment variables of Medusa server:
 
-- a User with the email: admin@medusa-test.com and password: supersecret
-- a Region called Default Region with the countries GB, DE, DK, SE, FR, ES, IT
-- a Shipping Option called Standard Shipping which costs 10 EUR
-- a Product called Cool Test Product with 4 Product Variants that all cost 19.50 EUR
+```bash
+mv .env.template .env
+```
 
-Visit [docs.medusa-commerce.com](https://docs.medusa-commerce.com) for further guides.
+And enter the necessary environment variables in the file.
 
-<p>
-  <a href="https://www.medusa-commerce.com">
-    Website
-  </a> 
-  |
-  <a href="https://medusajs.notion.site/medusajs/Medusa-Home-3485f8605d834a07949b17d1a9f7eafd">
-    Notion Home
-  </a>
-  |
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    Twitter
-  </a>
-  |
-  <a href="https://docs.medusa-commerce.com">
-    Docs
-  </a>
-</p>
+4\. Start Medusa Server:
+
+```bash
+npm start
+```
+
+## Other Resources
+
+- [Medusa Documentation](https://docs.medusajs.com/)

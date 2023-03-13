@@ -864,5 +864,13 @@
         }
       ]
     }
+  ],
+  "customer_groups": [
+    {
+      "name": "Acme",
+      "metadata": {
+        "is_seller": true
+      }
+    }
   ]
 }
